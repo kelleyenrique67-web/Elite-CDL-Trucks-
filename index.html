@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elite CDL Trucks</title>
+
+  <style>
+    :root {
+      --navy: #071522;
+      --blue: #0b587d;
+      --gold: #d1a45a;
+      --light: #f4f6f5;
+      --text: #18242c;
+      --muted: #718087;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--white);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    header {
+      height: 78px;
+      padding: 0 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: white;
+      border-bottom: 1px solid #e8edef;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      color: var(--navy);
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: var(--blue);
+    }
+
+    .logo small {
+      display: block;
+      color: var(--gold);
+      font-size: 9px;
+      letter-spacing: 4px;
+      margin-top: 4px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: var(--blue);
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 3px;
+      padding: 13px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 13px;
+    }
+
+    .btn-primary {
+      color: white;
+      background: var(--blue);
+    }
+
+    .btn-primary:hover {
+      background: #073c57;
+    }
+
+    .btn-outline {
+      color: var(--navy);
+      background: white;
+      border: 1px solid #ccd7da;
+    }
+
+    .language {
+      border: 0;
+      color: var(--blue);
+      background: transparent;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .hero {
+      min-height: 590px;
+      padding: 115px 6%;
+      color: white;
+      position: relative;
+      background:
+        linear-gradient(90deg, rgba(3, 14, 22, .9), rgba(3, 14, 22, .35)),
+        url("https://images.unsplash.com/photo-1601584115197-04ecc0da31d8?auto=format&fit=crop&w=2000&q=85")
+        center / cover;
+    }
+
+    .hero-content {
+      max-width: 690px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 1;
+    }
+
+    h1 {
+      font-size: clamp(46px, 7vw, 82px);
+      max-width: 750px;
+    }
+
+    h1 em {
+      color: #e0b96f;
+      font-style: normal;
+    }
+
+    .hero p:not(.eyebrow) {
+      max-width: 520px;
+      color: #e1e8ea;
+      line-height: 1.7;
+      margin: 25px 0 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      position: absolute;
+      bottom: -62px;
+      left: 6%;
+      right: 6%;
+      background: white;
+      padding: 24px;
+      color: var(--text);
+      box-shadow: 0 14px 40px rgba(4, 22, 31, .2);
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr auto;
+      gap: 18px;
+      align-items: end;
+    }
+
+    .search-box label {
+      color: var(--muted);
+      display: block;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .search-box select,
+    .search-box input {
+      width: 100%;
+      padding: 11px 0;
+      border: 0;
+      border-bottom: 1px solid #dce3e5;
+      outline: none;
+      color: var(--text);
+      background: white;
+    }
+
+    .trust {
+      padding: 105px 6% 42px;
+      background: var(--light);
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .trust strong {
+      color: var(--gold);
+      margin-right: 8px;
+    }
+
+    .section {
+      padding: 90px 6%;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 35px;
+    }
+
+    .section h2 {
+      color: var(--navy);
+      font-size: 48px;
+    }
+
+    .link {
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .categories,
+    .listings {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .category {
+      min-height: 270 relative;
+      overflow: hidden;
+    }
+
+    .category::before {
+      content: "";
+      position: absolute 0;
+      background: linear-gradient(transparent, rgba(3, 14, 22, .9));
+    }
+
+    .category * {
+      position: relative;
+    }
+
+    .category h3 {
+      font-size: 30px;
+      margin: 7px 0;
+    }
+
+    .category small {
+      color: #dce3e4;
+    }
+
+    .heavy {
+      background-image: url("https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=800&q=80");
+    }
+
+    .trailer {
+      background-image: url("https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=800&q=80");
+    }
+
+    .van {
+      background-image: url("https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&w=800&q=80");
+    }
+
+    .pickup {
+      background-image: url("https://images.unsplash.com/photo-1559416523-140ddc3d238c?auto=format&fit=crop&w=800&q=80");
+    }
+
+    .featured {
+      background: var(--light);
+    }
+
+    .listing {
+      background: white;
+      box-shadow: 0 5px 20px rgba(16, 43, 57, .1);
+    }
+
+    .listing-image {
+      height: 175px;
+      background-position: center;
+      background-size: cover;
+      position: relative;
+    }
+
+    .badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 6px 8px;
+      color: var(--blue);
+      background: white;
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .listing-info {
+      padding: 18px;
+    }
+
+    .listing h3 {
+      color: var(--navy);
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .details {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .price {
+      color: var(--blue);
+      font-weight: bold;
+      margin-top: 12px;
+    }
+
+    .how {
+      padding: 90px 6%;
+      color: white;
+      background: var(--navy);
+    }
+
+    .how h2 {
+      color: white;
+      font-size: 54px;
+      margin-bottom: 50px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .step {
+      padding-top: 20px;
+      border-top: 1px solid #3b525e;
+    }
+
+    .step b {
+      color: var(--gold);
+    }
+
+    .step h3 {
+      margin: 32px 0 14px;
+      font-size: 27px;
+    }
+
+    .step p {
+      color: #aab8bd;
+      line-height: 1.7;
+      font-size: 13px;
+    }
+
+    .safety {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .safety p {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .safety-box {
+      padding: 28px;
+      background: var(--light);
+      border: 1px solid #dfe5e7;
+    }
+
+    .safety-box div {
+      padding: 17px 0;
+      border-bottom: 1px solid #dfe5e7;
+    }
+
+    .safety-box div:last-child {
+      border-bottom: 0;
+    }
+
+    .safety-box strong {
+      color: var(--gold);
+      margin-right: 12px;
+    }
+
+    footer {
+      padding: 60px 6% 30px;
+      color: #a8b4b8;
+      background: #06111a;
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 35px;
+    }
+
+    footer h4 {
+      color: white;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    footer a,
+    footer span {
+      display: block;
+      margin: 12px 0;
+      font-size: 12px;
+    }
+
+    .copyright {
+      grid-column: 1 / -1;
+      padding-top: 20px;
+      border-top: 1px solid #22343d;
+      font-size: 11px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, .7);
+    }
+
+    .modal.active {
+      display: grid;
+    }
+
+    .modal-content {
+      width: 100%;
+      max-width: 440px;
+      padding: 35px;
+      background: white;
+      position: relative;
+    }
+
+    .modal-content h2 {
+      color: var(--navy);
+      margin: 12px 0;
+    }
+
+    .modal-content p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .modal-content input {
+      width: 100%;
+      margin: 15px 0;
+      padding: 13px;
+      border: 1px solid #dfe5e7;
+    }
+
+    .close {
+      position: absolute;
+      top: 8px;
+      right: 15px;
+      border: 0;
+      background: transparent;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      nav a,
+      nav .btn-outline {
+        display: none;
+      }
+
+      .search-box {
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        margin-top: 50px;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero {
+        padding-bottom: 30px;
+      }
+
+      .categories,
+      .listings {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .safety {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 0 20px;
+      }
+
+      nav {
+        gap: 8px;
+      }
+
+      .hero {
+        padding: 75px 20px 25px;
+      }
+
+      .search-box {
+        grid-template-columns: 1fr;
+      }
+
+      .trust {
+        padding: 65px 20px 30px;
+        gap: 20px;
+      }
+
+      .section {
+        padding: 65px 20px;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .section h2 {
+        font-size: 40px;
+        margin-bottom: 20px;
+      }
+
+      .categories,
+      .listings,
+      .steps,
+      footer {
+        grid-template-columns: 1fr;
+      }
+
+      .how {
+        padding: 65px 20px;
+      }
+
+      footer {
+        padding: 50px 20px;
+      }
+
+      .copyright {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="#" class="logo">
+      ELITE <span>CDL</span>
+      <small>TRUCKS</small>
+    </a>
+
+    <nav>
+      <a href="#browse">Browse Trucks</a>
+      <a href="#how">How It Works</a>
+      <a href="#safety">Safety</a>
+      <a href="#contact">Contact</a>
+      <button class="language" id="languageButton">FR</button>
+      <button class="btn btn-outline open-modal">Sign In</button>
+      <button class="btn btn-primary open-modal">Create Account</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">THE PROFESSIONAL TRUCK EXCHANGE MARKETPLACE</p>
+        <h1>Trade Trucks Across the <em>USA, Canada & UK</em></h1>
+        <p>
+          Find your next truck, offer a trade, and connect with owners
+          and businesses ready to move.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#browse" class="btn btn-primary">Browse Trucks →</a>
+          <button class="btn btn-outline open-modal">List Your Truck +</button>
+        </div>
+      </div>
+
+      <div class="search-box" id="browse">
+        <label>
+          Vehicle Type
+          <select id="typeFilter">
+            <option value="all">All Vehicles</option>
+            <option value="Heavy Truck">Heavy Truck</option>
+            <option value="Semi-Trailer">Semi-Trailer</option>
+            <option value="Commercial Van">Commercial Van</option>
+            <option value="Pickup">Pickup</option>
+          </select>
+        </label>
+
+        <label>
+          Location
+          <select id="locationFilter">
+            <option value="all">USA, Canada & UK</option>
+            <option value="USA">United States</option>
+            <option value="Canada">Canada</option>
+            <option value="UK">United Kingdom</option>
+          </select>
+        </label>
+
+        <label>
+          Make or Model
+          <input id="keyword" placeholder="e.g. Peterbilt 579">
+        </label>
+
+        <button class="btn btn-primary" id="searchButton">Search</button>
+      </div>
+    </section>
+
+    <section class="trust">
+      <div><strong>✓</strong>strong> Trade Offers</div>
+      <div><strong>◎</strong> USA, Canada & UK</div>
+      <div><strong>24/7</strong> Built for Trucking</div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow" style="color:#0b587d">EXPLORE THE MARKETPLACE</p>
+          <h2>Browse by Vehicle Type</h2>
+        </div>
+        <a href="#featured" class="link">View All Trucks →</a>
+      </div>
+
+      <div class="categories">
+        <button class="category heavy" data-type="Heavy Truck">
+          <span>01</span>
+          <h3>Heavy Trucks</h3>
+          <small>Built to work. Ready to trade.</small>
+        </button>
+
+        <button class="category trailer" data-type="Semi-Trailer">
+          <span>02</span>
+          <h3>Semi-Trailers</h3>
+          <small>More capacity. More opportunity.</small>
+        </button>
+
+        <button class="category van" data-type="Commercial Van">
+          <span>03</span>
+          <h3>Commercial Vans</h3>
+          <small>Power your next delivery.</small>
+        </button>
+
+        <button class="category pickup" data-type="Pickup">
+          <span>04</span>
+          <h3>Pickups</h3>
+          <small>Capability without compromise.</small>
+        </button>
+      </div>
+    </section>
+
+    <section class="section featured" id="featured">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow" style="color:#0b587d">NEW TO THE MARKET</p>
+          <h2>Featured Trucks</h2>
+        </div>
+        <span id="resultCount">4 vehicles</span>
+      </div>
+
+      <div class="listings" id="listings"></div>
+    </section>
+
+    <section class="how" id="how">
+      <p class="eyebrow">SIMPLE. DIRECT. PROFESSIONAL.</p>
+      <h2>Trade With Confidence.</h2>
+
+      <div class="steps">
+        <div class="step">
+          <b>01</b>
+          <h3>Create Your Listing</h3>
+          <p>Add your truck details, photos, documents and trade preferences.</p>
+        </div>
+
+        <div class="step">
+          <b>02</b>
+          <h3>Find Your Match</h3>
+          <p>Search available vehicles across the USA, Canada and the UK.</p>
+        </div>
+
+        <div class="step">
+          <b>03</b>
+          <h3>Make an Offer</h3>
+          <p>Propose your vehicle and add cash when the values do not line up.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section safety" id="safety">
+      <div>
+        <p class="eyebrow" style="color:#0b587d">BUILT ON TRUST</p>
+        <h2>A Smarter Way to Swap.</h2>
+        <p>
+          Elite CDL Trucks helps owners, carriers, dealers and businesses
+          connect. Always verify ownership, vehicle condition, title,
+          insurance and import requirements before completing a trade.
+        </p>
+        <a href="#contact" class="link">Visit the Safety Center →</a>
+      </div>
+
+      <div class="safety-box">
+        <div><strong>✓</strong> Contact verified</div>
+        <div><strong>✓</strong> Vehicle details visible</div>
+        <div><strong>✓</strong> Direct owner messaging</div>
+        <div><strong>✓</strong> International marketplace</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="contact">
+    <div>
+      <a href="#" class="logo" style="color:white">
+        ELITE <span>CDL</span>
+        <small>TRUCKS</small>
+      </a>
+      <p>Trade. Upgrade. Drive with confidence.</p>
+    </div>
+
+    <div>
+      <h4>Platform</h4>
+      <a href="#browse">Browse Trucks</a>
+      <a href="#" class="open-modal">List Your Truck</a>
+      <a href="#how">How It Works</a>
+    </div>
+
+    <div>
+      <h4>Support</h4>
+      <a href="#safety">Safety Center</a>
+      <a href="mailto:hello@elitecdltrucks.com">Contact Us</a>
+      <a href="#">Terms & Privacy</a>
+    </div>
+
+    <div>
+      <h4>Markets</h4>
+      <span>United States</span>
+      <span>Canada</span>
+      <span>United Kingdom</span>
+    </div>
+
+    <div class="copyright">
+      © 2026 Elite CDL Trucks. Marketplace only.
+    </div>
+  </footer>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="close" id="closeModal">×</button>
+      <p class="eyebrow" style="color:#0b587d">GET STARTED</p>
+      <h2>Join Elite CDL Trucks</h2>
+      <p>
+        Early access is opening soon. Leave your email and we will contact
+        you when the marketplace is ready.
+      </p>
+
+      <form id="waitlistForm">
+        <input type="email" placeholder="Your email address" required>
+        <button class="btn btn-primary">Join Waitlist</button>
+      </form>
+
+      <p id="formMessage"></p>
+    </div>
+  </div>
+
+  <script>
+    const vehicles = [
+      {
+        type: "Heavy Truck",
+        name: "2021 Peterbilt 579",
+        location: "Dallas, Texas",
+        country: "USA",
+        details: "425,000 miles · Diesel · Automatic",
+        price: "$115,000 USD",
+        image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d8?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        type: "Heavy Truck",
+        name: "2019 Kenworth T680",
+        location: "Toronto, Ontario",
+        country: "Canada",
+        details: "510,000 km · Diesel · Automated Manual",
+        price: "$92,500 CAD",
+        image: "https://images.unsplash.com/photo-1586191582151-f73872dfd36a?auto9767886558-efdc259cde1a?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        type: "Pickup",
+        name: "2020 Ram 3500 Laramie",
+        location: "Phoenix, Arizona",
+        country: "USA",
+        details: "88,000 miles · Diesel · 4x4",
+        price: "$58,750 USD",
+        image: "https://images.unsplash.com/photo-1559416523-140ddc3d238c?auto=format&fit=crop&w=900&q=80"
+      }
+    ];
+
+    const listings = document.getElementById("listings");
+    const resultCount = document.getElementById("resultCount");
+
+    function displayVehicles(items) {
+      listings.innerHTML = "";
+
+      items.forEach(vehicle => {
+        listings.innerHTML += `
+          <article class="listing">
+            <div class="listing-image"
+              style="background-image:url('${vehicle.image}')">
+              <span class="badge">Verified Seller</span>
+            </div>
+            <div class="listing-info">
+              <h3>${vehicle.name}</h3>
+              <div class="details">
+                ${vehicle.location}<br>
+                ${vehicle.details}
+              </div>
+              <div class="price">${vehicle.price}</div>
+              <br>
+              <button class="btn btn-primary open-modal">Propose a Trade</button>
+            </div>
+          </article>
+        `;
+      });
+
+      resultCount.textContent =
+        `${items.length} vehicle${items.length === 1 ? "" : "s"}`;
+
+      activateModalButtons();
+    }
+
+    function searchVehicles() {
+      const type = document.getElementById("typeFilter").value;
+      const country = document.getElementById("locationFilter").value;
+      const keyword = document.getElementById("keyword").value.toLowerCase();
+
+      const results = vehicles.filter(vehicle => {
+        const matchType = type === "all" || vehicle.type === type;
+        const matchCountry = country === "all" || vehicle.country === country;
+        const matchKeyword =
+          !keyword ||
+          vehicle.name.toLowerCase().includes(keyword) ||
+          vehicle.type.tosearchButton")
+      .addEventListener("click", searchVehicles);
+
+    document.querySelectorAll(".category").forEach(category => {
+      category.addEventListener("click", () => {
+        document.getElementById("typeFilter").value =
+          category.dataset.type;
+        searchVehicles();
+      });
+    });
+
+    const modal =
